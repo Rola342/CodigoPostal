@@ -1,59 +1,37 @@
-const express = require('express')
+const express = require('express');
 const mysql = require('mysql');
-const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3050;
 const app = express();
-app.use(express.json());
+const dotenv = require('dotenv');
+const { StatusCodes, getStatusCode } = require('http-status-codes');
 
-//SQL
+// SQL
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'Codigo_Postal'
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  port: process.env.MYSQL_PORT || 3306,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
 });
 
-//Rutas
-app.get('/', (req, res) => {
-    res.send('Codigo Postal');
-})
+app.get('/zip-code', ({ query: { q } }, res) => {
+  const sqlQuery = `SELECT * FROM codigos_postales WHERE cp = "${q}"`;
 
-//All
+  connection.query(sqlQuery, (error, results) => {
+    if (error) return res.status(StatusCodes.BAD_REQUEST).json(error);
 
-app.get('/codigopostal', (req, res) => {
-    const sql = 'Select * from codigos_postales';
-    connection.query(sql, (error, results) => {
-        if (error) throw error;
-        //  if (results.lenght > 0) {
-        res.json(results);
-        // } else {
-        //     res.send('no hay resultados')
-        //    console.log(results)
-        //  }
-    });
-
+    return res.status(StatusCodes.OK).json(results);
+  });
 });
 
-app.get('/codigopostal/:cp', (req, res) => {
-    const { cp } = req.params
-    const sql = `SELECT * FROM codigos_postales WHERE cp = "${cp}"`
-    connection.query(sql, (error, results) => {
-        if (error) throw error;
-        //  if (results.lenght > 0) {
-        res.json(results);
-        // } else {
-        //     res.send('no hay resultados')
-        //    console.log(results)
-        //  }
-    });
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Check Connect
+connection.connect((error) => {
+  if (error) throw error;
+  console.log('--- Base de datos corriendo ---');
 });
 
-
-
-//Check Connect
-connection.connect(error => {
-    if (error) throw error;
-    console.log('--- Base de datos corriendo ---')
-});
-
-app.listen(PORT, () => console.log(`Server running on Port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on PORT:${PORT}`));
