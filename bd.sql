@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `codigos_postales` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Contenu de la table `codigos_postales`
+-- Contenu  de la table `codigos_postales`
 --
 
 INSERT INTO `codigos_postales` (`cp`, `colonia`, `municipio`, `estado`) VALUES
