@@ -1,9 +1,14 @@
 const express = require('express');
 const mysql = require('mysql');
-const PORT = process.env.PORT || 3050;
 const app = express();
 const dotenv = require('dotenv');
+const cors = require('cors');
 const { StatusCodes, getStatusCode } = require('http-status-codes');
+
+// Cargamos las variables de entorno
+dotenv.config();
+
+const PORT = process.env.PORT || 3050;
 
 // SQL
 const connection = mysql.createConnection({
@@ -27,6 +32,7 @@ app.get('/zip-code', ({ query: { q } }, res) => {
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Check Connect
 connection.connect((error) => {
