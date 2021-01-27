@@ -28,7 +28,7 @@ const models = {
 };
 
 //correr todo los metodos de asociación
-Object.keys(models).forEach((nodelname) => {
+Object.keys(models).forEach((modelName) => {
     if ('associate' in models[modelName]) {
         models[modelName].associate(models);
     }
