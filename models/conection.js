@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+const Sequelize = requiere('sequelize');
 
 const sequelize = new Sequelize('database', 'username', 'password', {
     host: 'localhost',
