@@ -1,0 +1,5 @@
+MYSQL_HOST="localhost"
+MYSQL_USER="db_user"
+MYSQL_PASSWORD="db_password"
+MYSQL_DATABASE="db_name"
+PORT="8000"
