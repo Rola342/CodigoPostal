@@ -25,4 +25,13 @@ describe('zip-codes::endpoints', () => {
 
     expect(response.status).toBe(200);
   });
+
+  it('should get /:zipCode respond with json', async () => {
+    expect.hasAssertions();
+    const zipCode = 71246;
+
+    const response = await request.get(`/zip-codes/${zipCode}`);
+
+    expect(response.body).toBe(200);
+  });
 });
