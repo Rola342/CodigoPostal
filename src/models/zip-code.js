@@ -5,7 +5,13 @@ const sequelize = require('../../config/db');
 const zipCode = sequelize.define('zip-code', {
   keyCode: {
     type: DataTypes.INTEGER,
-    unique: DataTypes.TRUE,
+    allowNull: false,
+    unique: true,
+    validate: {
+      args: true,
+      msg: `Mensaje de prueba`,
+      len: 5,
+    },
   },
 });
 
