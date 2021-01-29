@@ -1,9 +1,14 @@
 const { StatusCodes } = require('http-status-codes');
 
-module.exports = ({ params: { zipCode } }, res) => {
+const ZipCodes = require('../../models/zip-codes');
+
+module.exports = async ({ params: { zipCode } }, res) => {
   // TODO: Debe de estar implementada la búsqueda por :zipCode
-  res.status(StatusCodes.OK).json({
-    message: 'Implementar obtención de código postal por :zipCode',
-    zipCode,
-  });
+  try {
+    const zipCodeRecord = await ZipCodes.findOne({ where: { key: zipCode } });
+
+    return res.status(StatusCodes.OK).json(zipCodeRecord);
+  } catch (error) {
+    return res.status(StatusCodes.BAD_REQUEST).json({ error });
+  }
 };

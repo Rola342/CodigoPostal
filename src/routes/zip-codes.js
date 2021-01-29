@@ -10,4 +10,7 @@ router.get('/', zipCodesControllers.getAll);
 // Obtiene la información de un código postal
 router.get('/:zipCode', zipCodesControllers.getOne);
 
+// Crea un código postal
+router.post('/', zipCodesControllers.create);
+
 module.exports = router;
