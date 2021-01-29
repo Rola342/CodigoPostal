@@ -8,7 +8,13 @@ const zipCodes = sequelize.define('zip-code', {
     allowNull: false,
     unique: true,
     validate: {
-      is: /[0-9]{5}/,
+      isZipCode(value) {
+        if (!value.match(/[0-9]{5}/)) {
+          throw new Error(
+            'El valor de "key" no válido. Tiene que tener el fomarto correcto.',
+          );
+        }
+      },
     },
   },
 });
