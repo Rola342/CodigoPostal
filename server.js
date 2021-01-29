@@ -40,6 +40,8 @@ app.listen(port, async () => {
     if (['development', 'test'].includes(process.env.NODE_ENV)) {
       sequelize.sync({ force: true });
     }
+
+    sequelize.sync();
   } catch (error) {
     console.log('ERROR::MARIADB::Conexión hecha con éxito');
     console.log('\n');

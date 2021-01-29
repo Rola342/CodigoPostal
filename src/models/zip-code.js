@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 
 const sequelize = require('../../config/db');
 
-const zipCodes = sequelize.define('zip-code', {
+const ZipCode = sequelize.define('zipCode', {
   key: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -19,4 +19,4 @@ const zipCodes = sequelize.define('zip-code', {
   },
 });
 
-module.exports = zipCodes;
+module.exports = ZipCode;

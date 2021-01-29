@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 
 const sequelize = require('../../config/db');
 
-const Populations = sequelize.define('populations', {
+const Populations = sequelize.define('population', {
   location: {
     type: DataTypes.STRING,
   },
