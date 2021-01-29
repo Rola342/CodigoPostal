@@ -1,5 +1,4 @@
 const chalk = require('chalk');
-
 const dotenv = require('dotenv');
 
 // Cargamos las variables de entorno
@@ -7,9 +6,14 @@ dotenv.config();
 
 const app = require('./app');
 const sequelize = require('./config/db');
+const migrate = require('./bootstrap/migrate');
 
 // Puerto por donde correrá el servidor
 const port = process.env.PORT || 3050;
+
+if (process.env.MIGRATE === 'true') {
+  migrate('zip-codes/aguascalientes.csv');
+}
 
 // Conexión a la base de datos
 app.listen(port, async () => {
