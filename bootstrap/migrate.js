@@ -1,23 +1,26 @@
-const csv = require('csvtojson');
+const axios = require('axios');
+const dotenv = require('dotenv');
 
-module.exports = async (csvPath) => {
-  if (!csvPath) {
-    throw new Error('El argumento csvPath es necesario');
-  }
+const parseCsvToJson = require('./parse-csv-to-json');
+const states = require('../zip-codes/states');
 
-  const relativePath = csvPath;
-  const result = await csv().fromFile(relativePath);
+dotenv.config();
 
-  const parsedResult = result.map((item) => ({
-    zipCode: item.d_codigo,
-    data: {
-      location: item.d_asenta,
-      delegation: item.D_mnpio,
-      state: item.d_estado,
-      city: item.d_ciudad,
-      zone: item.d_zona,
-    },
-  }));
+module.exports = (rootPath) => {
+  return states.map(async (state) => {
+    const populations = await parseCsvToJson(`${rootPath}/${state}.csv`);
 
-  console.log(parsedResult);
+    populations.map(async (population) => {
+      try {
+        await axios.post(`${process.env.HOST}/populations`, {
+          zipCode: population.zipCode,
+          data: population,
+        });
+
+        return { success: true };
+      } catch (error) {
+        return { error: 'ZipCodeError' };
+      }
+    });
+  });
 };

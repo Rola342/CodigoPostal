@@ -11,10 +11,6 @@ const migrate = require('./bootstrap/migrate');
 // Puerto por donde correrá el servidor
 const port = process.env.PORT || 3050;
 
-if (process.env.MIGRATE === 'true') {
-  migrate('zip-codes/aguascalientes.csv');
-}
-
 // Conexión a la base de datos
 app.listen(port, async () => {
   console.log('\n');
@@ -31,6 +27,7 @@ app.listen(port, async () => {
 
   try {
     await sequelize.authenticate();
+
     console.log('\n');
     console.log(
       chalk.green('==================== MARIADB ===================='),
@@ -41,11 +38,15 @@ app.listen(port, async () => {
     );
     console.log('\n');
 
-    if (['development', 'test'].includes(process.env.NODE_ENV)) {
-      sequelize.sync({ force: true });
-    }
+    // if (['development', 'test'].includes(process.env.NODE_ENV)) {
+    //   sequelize.sync({ force: true });
+    // }
 
-    sequelize.sync();
+    // sequelize.sync();
+
+    if (process.env.MIGRATE === 'true') {
+      migrate('zip-codes');
+    }
   } catch (error) {
     console.log('ERROR::MARIADB::Conexión hecha con éxito');
     console.log('\n');

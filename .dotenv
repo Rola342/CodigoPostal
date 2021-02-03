@@ -5,3 +5,5 @@ MYSQL_DATABASE="db_name"
 PORT="8000"
 NODE_ENV="development"
 MIGRATE="nos dice si la base de datos tiene que ser migrada"
+# Por ejemplo
+HOST="http://localhost:8000"

@@ -19,10 +19,10 @@ const Populations = sequelize.define('population', {
     type: DataTypes.STRING,
   },
   stateCode: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
   },
   officeKey: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
   },
   zone: {
     type: DataTypes.STRING,
