@@ -33,3 +33,18 @@ MYSQL_PASSWORD="password_mariadb"
 MYSQL_DATABASE="bd_mariadb"
 PORT="port"
 ```
+
+## Migración
+
+Para migrar cambia la variable de entorno a true, por ejemplo:
+``` shell
+MIGRATE=true
+```
+
+1. Ejecuta el servidor con ```npm start``` para iniciar la migración y espera a que termine de migrar.
+2. Espera que salga en consola el mensaje ```Migración finalizada```.
+
+Una vez se termina de hacer la migración se tiene que cambiar la variable de entorno a false.
+``` shell
+MIGRATE=false
+```

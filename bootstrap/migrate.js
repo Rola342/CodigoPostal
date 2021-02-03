@@ -7,7 +7,7 @@ const states = require('../zip-codes/states');
 dotenv.config();
 
 module.exports = (rootPath) => {
-  return states.map(async (state) => {
+  states.map(async (state) => {
     const populations = await parseCsvToJson(`${rootPath}/${state}.csv`);
 
     populations.map(async (population) => {
@@ -23,4 +23,6 @@ module.exports = (rootPath) => {
       }
     });
   });
+
+  console.log('Migración finalizada');
 };
