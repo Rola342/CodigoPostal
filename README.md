@@ -24,6 +24,10 @@ Clona el proyecto, entra a la carpeta raíz e instala las dependencias ejecutand
 $ npm install
 ```
 
+### DEPRECATION ###
+
+**Ya no se usará la base de datos MariaDB, se ha optado por utilizar MongoDB**
+
 Una vez tienes instaladas las dependencias, asegurate de tener las siguientes variables de entorno en el archivo ```.env``` en ```/```.
 
 ``` shell
@@ -31,6 +35,16 @@ MYSQL_HOST="host_mariadb"
 MYSQL_USER="user_mariadb"
 MYSQL_PASSWORD="password_mariadb"
 MYSQL_DATABASE="bd_mariadb"
+PORT="port"
+```
+
+## MONGODB ##
+
+Se utilizarán las siguientes variables de entorno en vez de las anteriores
+
+``` shell
+MONGO_URI_DEV="uri de mongo en desarrollo"
+MONGO_URI="uri de mongo en producción"
 PORT="port"
 ```
 

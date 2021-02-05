@@ -7,7 +7,7 @@ module.exports = async ({ body: { key } }, res) => {
   try {
     const zipCode = await ZipCode.create({ key });
 
-    return res.status(StatusCodes.CREATED).json({ zipCode });
+    return res.status(StatusCodes.CREATED).json(zipCode);
   } catch (error) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       error,

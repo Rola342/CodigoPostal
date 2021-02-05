@@ -1,32 +1,29 @@
-const { DataTypes } = require('sequelize');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const sequelize = require('../../config/db');
+const PopulationSchema = new Schema(
+  {
+    location: String,
+    locationType: String,
+    delegation: String,
+    state: String,
+    city: String,
+    zone: String,
+    delegationCode: {
+      type: String,
+      validate: (value) => /[0-9]{4}/.test(value),
+    },
+    stateCode: {
+      type: String,
+      validate: (value) => /[0-9]{2}/.test(value),
+    },
+    officeKey: {
+      type: String,
+      validate: (value) => /[0-9]{5}/.test(value),
+    },
+    zipCode: { type: Schema.Types.ObjectId, ref: 'ZipCode' },
+  },
+  { timestamps: true },
+);
 
-const Populations = sequelize.define('population', {
-  location: {
-    type: DataTypes.STRING,
-  },
-  locationType: {
-    type: DataTypes.STRING,
-  },
-  delegation: {
-    type: DataTypes.STRING,
-  },
-  state: {
-    type: DataTypes.STRING,
-  },
-  city: {
-    type: DataTypes.STRING,
-  },
-  stateCode: {
-    type: DataTypes.STRING,
-  },
-  officeKey: {
-    type: DataTypes.STRING,
-  },
-  zone: {
-    type: DataTypes.STRING,
-  },
-});
-
-module.exports = Populations;
+module.exports = mongoose.model('Population', PopulationSchema);

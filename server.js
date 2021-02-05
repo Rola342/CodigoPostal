@@ -5,14 +5,15 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = require('./app');
-const sequelize = require('./config/db');
+// const sequelize = require('./config/db');
+const dbConnect = require('./db/connect');
 const migrate = require('./bootstrap/migrate');
 
 // Puerto por donde correrá el servidor
 const port = process.env.PORT || 3050;
 
 // Conexión a la base de datos
-app.listen(port, async () => {
+app.listen(port, () => {
   console.log('\n');
   console.log(
     chalk.blue.bold('==================== SERVER ===================='),
@@ -25,35 +26,25 @@ app.listen(port, async () => {
   );
   console.log('\n');
 
-  try {
-    await sequelize.authenticate();
+  // Función que maneja las conexiones
+  dbConnect()
+    .then(async () => {
+      console.log('\n');
+      console.log(
+        chalk.blue('==================== MONGO ===================='),
+      );
+      console.log(chalk.blue('MONGO::CONNECT::Conexión hecha con éxito'));
+      console.log(
+        chalk.blue('==================== MONGO ===================='),
+      );
+      console.log('\n');
 
-    console.log('\n');
-    console.log(
-      chalk.green('==================== MARIADB ===================='),
-    );
-    console.log(chalk.green('MARIADB::CONNECT::Conexión hecha con éxito'));
-    console.log(
-      chalk.green('==================== MARIADB ===================='),
-    );
-    console.log('\n');
-
-    // if (['development', 'test'].includes(process.env.NODE_ENV)) {
-    //   sequelize.sync({ force: true });
-    // }
-
-    // sequelize.sync();
-
-    if (process.env.MIGRATE === 'true') {
-      migrate('zip-codes');
-    }
-  } catch (error) {
-    console.log('ERROR::MARIADB::Conexión hecha con éxito');
-    console.log('\n');
-    console.log(chalk.red('==================== MARIADB ===================='));
-    console.log(chalk.red('MARIADB::ERROR::Hubo un error al conectar'));
-    console.log(chalk.red(error));
-    console.log(chalk.red('==================== MARIADB ===================='));
-    console.log('\n');
-  }
+      if (process.env.MIGRATE === 'true') {
+        await migrate('./zip-codes');
+      }
+    })
+    .catch((error) => {
+      console.log(chalk.red('MONGODB::ERROR::'));
+      console.log(chalk.red(error));
+    });
 });

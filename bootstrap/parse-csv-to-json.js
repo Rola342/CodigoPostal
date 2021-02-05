@@ -4,7 +4,6 @@ module.exports = async (csvPath) => {
   if (!csvPath) {
     throw new Error('El argumento csvPath es necesario');
   }
-
   const result = await csv().fromFile(csvPath);
 
   const parsedResult = result.map((item) => ({
@@ -17,9 +16,8 @@ module.exports = async (csvPath) => {
     stateCode: item.c_estado,
     officeKey: item.c_oficina,
     zone: item.d_zona,
+    delegationCode: item.c_mnpio,
   }));
-
-  // console.log(parsedResult);
 
   return parsedResult;
 };
